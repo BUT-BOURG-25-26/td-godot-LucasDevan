@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://sdj6tedordvb"]
+
+[ext_resource type="Script" uid="uid://dy6u0d4mf7jxn" path="res://Scripts/ennemie.gd" id="1_vw0r3"]
+[ext_resource type="Material" uid="uid://beqah8n5kmgt0" path="res://Materials/M_Ennemie.tres" id="2_a5c7p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a5c7p"]
+
+[node name="Ennemie" type="CharacterBody3D"]
+script = ExtResource("1_vw0r3")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material_override = ExtResource("2_a5c7p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_a5c7p")
