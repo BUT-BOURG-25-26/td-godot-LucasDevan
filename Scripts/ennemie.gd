@@ -28,7 +28,7 @@ func _physics_process(delta: float) -> void:
 
 func touches_player()->bool:
 	var vectorial_space_between = player.global_position - global_position
-	var norme = sqrt(vectorial_space_between.x**2 +vectorial_space_between.y**2 + vectorial_space_between.z**2)
-	if(norme>=1):
+	var norme = vectorial_space_between.x**2 +vectorial_space_between.y**2 + vectorial_space_between.z**2
+	if(norme>1.8):
 		return false
 	return true
