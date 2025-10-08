@@ -12,8 +12,9 @@ func _ready() -> void:
 
 func _process(delta:float) -> void:
 	if Input.is_action_just_pressed("damage_player"):
-		health -= 1
-		healthbar.update(health)
+		damage_player(1)
+	if Input.is_action_just_pressed("heal_player"):
+		heal_player(1)		
 
 func _physics_process(delta: float) -> void:
 	read_move_inputs()
@@ -28,3 +29,18 @@ func read_move_inputs():
 	move_inputs = move_inputs.normalized()
 	print(move_inputs)
 	return
+	
+func damage_player(amount : int =1):
+	health -= amount
+	if(health<0):
+		health=0
+	healthbar.update(health)
+	
+func heal_player(amount : int =1):
+	health += amount
+	if(health>healthbar.max_value):
+		health=healthbar.max_value
+	healthbar.update(health)
+	
+func get_health() -> int:
+	return health
