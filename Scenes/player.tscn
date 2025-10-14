@@ -1,10 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw0dhumjpcqmi"]
+[gd_scene load_steps=24 format=3 uid="uid://bw0dhumjpcqmi"]
 
 [ext_resource type="Script" uid="uid://gtney2ofwoov" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Material" uid="uid://b33q5gc7fqod0" path="res://Materials/M_Player.tres" id="1_v0iea"]
 [ext_resource type="Script" uid="uid://ctgjgv6de0fyo" path="res://Scripts/health_bar.gd" id="3_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://d1ceuge37ite" path="res://Scenes/vfx_impact.tscn" id="4_vgqql"]
 [ext_resource type="Script" uid="uid://bas2f0x2qqxfu" path="res://Scripts/attack_handler.gd" id="5_fkybt"]
+[ext_resource type="Animation" uid="uid://ba588pf6etk6e" path="res://KennyAssets/Animations/Root_Idle.res" id="6_8erm5"]
+[ext_resource type="PackedScene" uid="uid://dtfnhfgs3eoqs" path="res://Scenes/Skater.tscn" id="6_x3wgy"]
+[ext_resource type="Animation" uid="uid://ccp5o725pjfws" path="res://KennyAssets/Animations/Root_Jump.res" id="7_f1ek2"]
+[ext_resource type="Animation" uid="uid://qxysoeylxdcs" path="res://KennyAssets/Animations/Root_Run.res" id="8_tx1dd"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_cvnsp"]
 viewport_path = NodePath("SubViewport")
@@ -88,19 +91,55 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gymyn"]
+_data = {
+&"Root_Idle": ExtResource("6_8erm5"),
+&"Root_Jump": ExtResource("7_f1ek2"),
+&"Root_Run": ExtResource("8_tx1dd")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8erm5"]
+_data = {
+&"Root_Idle": ExtResource("6_8erm5"),
+&"Root_Jump": ExtResource("7_f1ek2"),
+&"Root_Run": ExtResource("8_tx1dd")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f1ek2"]
+animation = &"skater_anmia/Root_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tx1dd"]
+animation = &"skater_anmia/Root_Run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gymyn"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pu2lt"]
+xfade_time = 1.0
+advance_mode = 2
+advance_condition = &"running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ukyrk"]
+xfade_time = 1.0
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8erm5"]
+states/End/position = Vector2(568, 81)
+states/Start/position = Vector2(83, 71)
+states/skater_anmia_Root_Idle/node = SubResource("AnimationNodeAnimation_f1ek2")
+states/skater_anmia_Root_Idle/position = Vector2(312, 71)
+states/skater_anmia_Root_Run/node = SubResource("AnimationNodeAnimation_tx1dd")
+states/skater_anmia_Root_Run/position = Vector2(312, 184)
+transitions = ["Start", "skater_anmia_Root_Idle", SubResource("AnimationNodeStateMachineTransition_gymyn"), "skater_anmia_Root_Idle", "skater_anmia_Root_Run", SubResource("AnimationNodeStateMachineTransition_pu2lt"), "skater_anmia_Root_Run", "skater_anmia_Root_Idle", SubResource("AnimationNodeStateMachineTransition_ukyrk")]
+
 [node name="Player" type="CharacterBody3D"]
 axis_lock_linear_y = true
 axis_lock_angular_y = true
 floor_snap_length = 0.13
 safe_margin = 0.01
 script = ExtResource("1_cvnsp")
-move_speed = null
-health = null
 vfx_scene = ExtResource("4_vgqql")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-material_override = ExtResource("1_v0iea")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.18181, 0)
@@ -144,5 +183,20 @@ vfx_scene = ExtResource("4_vgqql")
 
 [node name="ImpactVFX" parent="." instance=ExtResource("4_vgqql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96182, 0)
+
+[node name="characterMedium" parent="." instance=ExtResource("6_x3wgy")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="characterMedium"]
+libraries = {
+&"skater_library": SubResource("AnimationLibrary_gymyn")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="characterMedium"]
+libraries = {
+&"skater_anmia": SubResource("AnimationLibrary_8erm5")
+}
+tree_root = SubResource("AnimationNodeStateMachine_8erm5")
+parameters/conditions/idle = false
+parameters/conditions/running = false
 
 [connection signal="body_entered" from="ImpactVFX" to="ImpactVFX" method="_on_body_entered"]

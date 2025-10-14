@@ -25,8 +25,3 @@ func ennemie_in_range(ennemies_position :  Vector3, range : float = 1) -> bool:
 	currentDist += (ennemies_position.y-global_position.y)**2
 	currentDist += (ennemies_position.z-global_position.z)**2
 	return currentDist<range**2
-	
-func _on_body_entered(body: Node3D) -> void:
-	print("entered")
-	if(body is Ennemie):
-		body.queue_free()

@@ -4,13 +4,17 @@ var healthbar
 @export var move_speed:float = 5
 @export var health: int = 5
 @export var vfx_scene :PackedScene 
-
+@onready var animationTres = $characterMedium/AnimationTree
 const damage_cool_downMax : float = 0.5
 var damage_cool_down : float = 0.0
+
+var running : bool = false
+var idle : bool = true
 
 func _ready() -> void:
 	healthbar = $SubViewport/HealthBar
 	healthbar.max_value = health
+	look_at(Vector3(0,0,0))
 
 func _process(delta:float) -> void:
 	do_health_inputs()
@@ -21,6 +25,16 @@ func _physics_process(delta: float) -> void:
 	#print(move_inputs)
 	var _velocity = move_inputs * move_speed
 	
+	if(_velocity!=Vector3.ZERO):
+		var look = -3*_velocity
+		look.y = global_position.y
+		look_at(look)
+		animationTres.set("parameters/conditions/running",true)
+		animationTres.set("parameters/conditions/idle",false)
+	else:
+		animationTres.set("parameters/conditions/running",false)
+		animationTres.set("parameters/conditions/idle",true)
+
 	if(is_on_floor()):
 		_velocity.y = Input.get_action_strength("jump") * 100 
 	else:
