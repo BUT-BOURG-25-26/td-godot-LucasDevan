@@ -87,8 +87,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="Player" type="CharacterBody3D"]
-axis_lock_linear_y = true
-axis_lock_angular_y = true
+slide_on_ceiling = false
 script = ExtResource("1_cvnsp")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
@@ -103,7 +102,7 @@ libraries = {
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.992663, 0)
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 0.983715, 0)
 shape = SubResource("CapsuleShape3D_v0iea")
 debug_color = Color(0.716764, 0.286311, 0.95659, 0.42)
 
