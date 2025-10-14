@@ -1,0 +1,123 @@
+[gd_scene load_steps=12 format=3 uid="uid://dm6f2e680tf4q"]
+
+[ext_resource type="PackedScene" uid="uid://bw0dhumjpcqmi" path="res://Scenes/player.tscn" id="1_hpc76"]
+[ext_resource type="Script" uid="uid://bh2bt2gx35w0w" path="res://Scripts/main_scene.gd" id="1_nhkr4"]
+[ext_resource type="PackedScene" uid="uid://sdj6tedordvb" path="res://Scenes/ennemie.tscn" id="1_tr2i4"]
+[ext_resource type="Script" uid="uid://c6p1obgnnymb" path="res://Scripts/ennemie_spawner.gd" id="4_7rqgy"]
+[ext_resource type="Script" uid="uid://b6gx46cufngwb" path="res://Scripts/gameManagers/GameOverManager.gd" id="5_qxria"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hpc76"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_tr2i4"]
+sky_material = SubResource("ProceduralSkyMaterial_hpc76")
+
+[sub_resource type="Environment" id="Environment_nhkr4"]
+background_mode = 2
+sky = SubResource("Sky_tr2i4")
+tonemap_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cihdc"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_hpc76"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7rqgy"]
+size = Vector3(10.3151, 1.50482, 18.2141)
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_nhkr4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nhkr4")
+
+[node name="Player" parent="." instance=ExtResource("1_hpc76")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.87444, 8)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.848972, 0.528438, 0, -0.528438, 0.848972, 0, 7.84879, 20.3507)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.87444, 0)
+
+[node name="Ennemie" parent="." instance=ExtResource("1_tr2i4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.36308, -5.47117)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 2.87444, 0)
+mesh = SubResource("PlaneMesh_cihdc")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.87444, 0)
+shape = SubResource("WorldBoundaryShape3D_hpc76")
+
+[node name="EnnemieSpawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.76021, 0)
+script = ExtResource("4_7rqgy")
+enemy_scene = ExtResource("1_tr2i4")
+
+[node name="Node3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62107, 0, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 70.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.31256, 3.38743, 4.72041)
+size = Vector3(10.4531, 1, 18.5868)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.30067, 3.12685, 4.88904)
+shape = SubResource("BoxShape3D_7rqgy")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="GameOverMenue" type="Control" parent="CanvasLayer" groups=["game_over"]]
+layout_mode = 3
+offset_right = 321.0
+offset_bottom = 198.0
+script = ExtResource("5_qxria")
+
+[node name="Restart" type="Button" parent="CanvasLayer/GameOverMenue" groups=["game_over"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.157
+anchor_right = 0.502
+anchor_bottom = 0.157
+offset_left = -160.142
+offset_top = -30.086
+offset_right = 159.858
+offset_bottom = 29.914
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Restart"
+
+[node name="Quite" type="Button" parent="CanvasLayer/GameOverMenue" groups=["game_over"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.833
+anchor_right = 0.502
+anchor_bottom = 0.833
+offset_left = -160.142
+offset_top = -29.934
+offset_right = 159.858
+offset_bottom = 30.066
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quite"
+
+[connection signal="pressed" from="CanvasLayer/GameOverMenue/Restart" to="CanvasLayer/GameOverMenue" method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/GameOverMenue/Quite" to="CanvasLayer/GameOverMenue" method="_on_quite_pressed"]

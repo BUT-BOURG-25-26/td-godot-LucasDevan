@@ -5,7 +5,7 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a5c7p"]
 
-[node name="Ennemie" type="CharacterBody3D"]
+[node name="Ennemie" type="CharacterBody3D" groups=["ennemie"]]
 floor_snap_length = 0.13
 script = ExtResource("1_vw0r3")
 
