@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody3D
 var healthbar
 @export var move_speed:float = 5
-@export var health: int = 3
+@export var health: int = 5
 
 var move_inputs: Vector3
 var gravity = 22
@@ -19,15 +19,14 @@ func _process(delta:float) -> void:
 
 func _physics_process(delta: float) -> void:
 	read_move_inputs()
-	global_position += move_inputs * move_speed * delta
+	velocity = move_inputs * move_speed * delta
 	
 	if(is_on_floor()):
-		global_position.y = Input.get_action_strength("jump") * delta
+		velocity.y += Input.get_action_strength("jump")
 	else :
-		global_position.y = get_gravity().y
-	
-	print(global_position)
+		velocity.y -= get_gravity().y*delta
 	move_and_slide()
+	print(global_position)
 
 	return
 

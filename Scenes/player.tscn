@@ -56,7 +56,7 @@ _data = {
 &"life_change": SubResource("Animation_6t5aa")
 }
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0iea"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6t5aa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvnsp"]
 bg_color = Color(0.73531, 1, 0.820314, 1)
@@ -91,6 +91,11 @@ axis_lock_linear_y = true
 axis_lock_angular_y = true
 script = ExtResource("1_cvnsp")
 
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = ExtResource("1_v0iea")
+use_collision = true
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.18181, 0)
 billboard = 1
@@ -103,8 +108,8 @@ libraries = {
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.992663, 0)
-shape = SubResource("CapsuleShape3D_v0iea")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_6t5aa")
 debug_color = Color(0.716764, 0.286311, 0.95659, 0.42)
 
 [node name="SubViewport" type="SubViewport" parent="."]
@@ -126,8 +131,3 @@ max_value = 5.0
 value = 3.0
 show_percentage = false
 script = ExtResource("3_6t5aa")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-material_override = ExtResource("1_v0iea")
-use_collision = true
