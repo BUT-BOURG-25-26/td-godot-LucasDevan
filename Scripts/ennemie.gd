@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	velocity.y = get_gravity().y
 		
 	move_and_slide()
-	print("ennemie:",global_position)
+	#print("ennemie:",global_position)
 
 func touches_player(action_range : float = 1.8)->bool:
 	var vectorial_space_between = player.global_position - global_position

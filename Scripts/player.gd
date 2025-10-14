@@ -29,7 +29,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			_velocity.y = get_gravity().y *delta/2
 	velocity = _velocity
-	
 	move_and_slide()
 	return
 
