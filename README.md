@@ -48,7 +48,7 @@ var player = get_tree().get_first_node_in_group("player")
 
 func _on_body_entered(body):
   if body.is_in_group("player"):
-    queue_free() #permet de destroy un node, en l'occurence le node actuel
+	queue_free() #permet de destroy un node, en l'occurence le node actuel
  elif body is Player: #Vous pouvez également regarder le nom de la classe
   #traitement
 ```
@@ -114,7 +114,7 @@ get_tree().reload_current_scene()
   var result = space_state.intersect_ray(query)
 
   if result:
-    print(result.position)
+	print(result.position)
 ```
 
 ### 2.2 Détruire les ennemis avec le VFX
@@ -126,7 +126,7 @@ get_tree().reload_current_scene()
 
 ```gdscript
 func _on_body_entered(body):
-    
+	
 ```
 
 ---
