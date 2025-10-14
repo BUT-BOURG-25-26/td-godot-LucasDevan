@@ -1,3 +1,4 @@
+class_name ImpactVFX
 extends Area3D 
 
 @onready var flash = $Flash
@@ -10,6 +11,3 @@ func emit():
 	flare.emitting = true
 	shockwave.emitting = true
 	sparks.emitting = true
-
-func _on_shockwave_finished() -> void:
-	queue_free()
