@@ -11,6 +11,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if(attack_cool_down<=0 && touches_player()):
 		player.damage_player(1)
+		#queue_free()
 		attack_cool_down = 30
 	attack_cool_down-=1
 
@@ -26,6 +27,7 @@ func _physics_process(delta: float) -> void:
 	velocity.y = get_gravity().y
 		
 	move_and_slide()
+	print("ennemie:",global_position)
 
 func touches_player(action_range : float = 1.8)->bool:
 	var vectorial_space_between = player.global_position - global_position

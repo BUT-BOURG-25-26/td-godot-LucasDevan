@@ -3,7 +3,7 @@ extends Node3D
 
 #permet de référencer votre scène enemy au sein de votre script
 @export var enemy_scene: PackedScene
-const timerMax : float = 1.0
+const timerMax : float = 5.0
 var timer : float 
 var mainScene : Node3D
 var spawn_position_list = []
