@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw0dhumjpcqmi"]
+[gd_scene load_steps=12 format=3 uid="uid://bw0dhumjpcqmi"]
 
 [ext_resource type="Script" uid="uid://gtney2ofwoov" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Material" uid="uid://b33q5gc7fqod0" path="res://Materials/M_Player.tres" id="1_v0iea"]
 [ext_resource type="Script" uid="uid://ctgjgv6de0fyo" path="res://Scripts/health_bar.gd" id="3_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://d1ceuge37ite" path="res://Scenes/vfx_impact.tscn" id="4_vgqql"]
-[ext_resource type="Script" uid="uid://bas2f0x2qqxfu" path="res://Scripts/attack_handler.gd" id="5_fkybt"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_cvnsp"]
 viewport_path = NodePath("SubViewport")
@@ -98,6 +97,7 @@ script = ExtResource("1_cvnsp")
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = ExtResource("1_v0iea")
+use_collision = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.18181, 0)
@@ -137,7 +137,3 @@ script = ExtResource("3_6t5aa")
 
 [node name="ImpactVFX" parent="." instance=ExtResource("4_vgqql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96182, 0)
-
-[node name="attackHandler" type="Node3D" parent="."]
-script = ExtResource("5_fkybt")
-vfx_scene = ExtResource("4_vgqql")
