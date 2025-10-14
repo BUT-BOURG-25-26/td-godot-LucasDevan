@@ -11,3 +11,11 @@ func emit():
 	flare.emitting = true
 	shockwave.emitting = true
 	sparks.emitting = true
+
+func _on_shockwave_finished() -> void:
+	queue_free()
+
+func _on_body_entered(body: Node3D) -> void:
+	print("entered")
+	if(body is Ennemie):
+		body.queue_free()

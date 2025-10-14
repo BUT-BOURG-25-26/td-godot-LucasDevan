@@ -176,7 +176,9 @@ process_material = SubResource("ParticleProcessMaterial_rwmre")
 draw_pass_1 = SubResource("QuadMesh_lwtfs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03925, 0)
 shape = SubResource("SphereShape3D_lwtfs")
 disabled = true
 
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
 [connection signal="finished" from="Shockwave" to="." method="_on_shockwave_finished"]

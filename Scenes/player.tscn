@@ -94,6 +94,7 @@ axis_lock_angular_y = true
 floor_snap_length = 0.13
 safe_margin = 0.01
 script = ExtResource("1_cvnsp")
+vfx_scene = ExtResource("4_vgqql")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -135,9 +136,11 @@ value = 5.0
 show_percentage = false
 script = ExtResource("3_6t5aa")
 
-[node name="ImpactVFX" parent="." instance=ExtResource("4_vgqql")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96182, 0)
-
 [node name="attackHandler" type="Node3D" parent="."]
 script = ExtResource("5_fkybt")
 vfx_scene = ExtResource("4_vgqql")
+
+[node name="ImpactVFX" parent="." instance=ExtResource("4_vgqql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96182, 0)
+
+[connection signal="body_entered" from="ImpactVFX" to="ImpactVFX" method="_on_body_entered"]

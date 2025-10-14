@@ -5,7 +5,8 @@ extends Node3D
 func _input(event):
 	# Mouse in viewport coordinates.
 	if event is InputEventMouseButton:
-		print("Mouse Click/Unclick at: ", event.position)
+		
+		#print("Mouse Click/Unclick at: ", event.position)
 		# Récupère la caméra dans la scène
 		var camera = get_viewport().get_camera_3d()
 		if(camera):
@@ -23,6 +24,8 @@ func _input(event):
 				var fx : ImpactVFX = vfx_scene.instantiate()
 				add_child(fx)
 				fx.global_position = result.position
+				print(result.position)
 				fx.emit()
-	elif event is InputEventMouseMotion:
-		print("Mouse Motion at: ", event.position)
+	
+	#elif event is InputEventMouseMotion:
+		#print("Mouse Motion at: ", event.position)
